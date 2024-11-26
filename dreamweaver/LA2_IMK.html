@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LA2_IMK</title>
+<script type="text/javascript">
+    // Live View Confirm Dialog
+    function showConfirmDialog(message, onYesCallback, onNoCallback) {
+        var confirmDialog = window.confirm(message);
+        if (confirmDialog) {
+            if (onYesCallback) onYesCallback();
+        } else {
+            if (onNoCallback) onNoCallback();
+        }
+    }
+
+    // Live View Alert Dialog
+    function showAlertDialog(message, onOkCallback) {
+        window.alert(message);
+        if (onOkCallback) onOkCallback();
+    }
+
+    // Live View Prompt Dialog
+    function showPromptDialog(message, defaultValue, onOkCallback, onCancelCallback) {
+        var userInput = window.prompt(message, defaultValue);
+        if (userInput !== null) {
+            if (onOkCallback) onOkCallback(userInput);
+        } else {
+            if (onCancelCallback) onCancelCallback();
+        }
+    }
+
+    function submitForm() {
+        showConfirmDialog(
+            "Apakah data yang kamu isi sudah benar?",
+            function() {
+                validateNPM();
+            },
+            function() {
+                return false;
+            }
+        );
+    }
+
+    function validateNPM() {
+        var npmInput = document.getElementById('textfield');
+        if (!npmInput || npmInput.value.trim() === '') {
+            showAlertDialog("NPM Salah!");
+            return false;
+        }
+        // If NPM is valid, show verification prompt
+        showPromptDialog(
+            "Masukkan kode verifikasi (contoh: 1234):",
+            "1234",
+            function(code) {
+                // Handle verification code
+                if (code === "1234") {
+                    showAlertDialog("Verifikasi berhasil!");
+                } else {
+                    showAlertDialog("Kode verifikasi salah!");
+                }
+            },
+            function() {
+                console.log("Verification cancelled");
+            }
+        );
+    }
+
+    function showHelp() {
+        showAlertDialog("Ini adalah form data mahasiswa. Silakan isi semua field yang tersedia.");
+    }
+</script>
+</head>
+<body>
+<table width="860" height="570" border="3" align="center">
+  <tbody>
+    <tr>
+      <td width="846" bgcolor="#99CC99"><table width="804" height="445" border="3">
+        <tbody>
+          <tr bgcolor="#99FF00">
+            <td height="74" colspan="3" align="center"><h3>DATA MAHASISWA</h3></td>
+            </tr>
+          <tr>
+            <td width="191" height="33" bgcolor="#99FF00">NPM</td>
+            <td width="6" bgcolor="#99FF99"><label for="textfield">:</label></td>
+            <td width="551" bgcolor="#99FF99"><input type="text" name="textfield" id="textfield"></td>
+          </tr>
+          <tr>
+            <td height="28" bgcolor="#99FF00">Nama</td>
+            <td bgcolor="#99FF99">:</td>
+            <td bgcolor="#99FF99"><input type="text" name="textfield2" id="textfield2"></td>
+          </tr>
+          <tr>
+            <td height="96" bgcolor="#99FF00">Alamat</td>
+            <td bgcolor="#99FF99">:</td>
+            <td bgcolor="#99FF99"><textarea name="textarea" id="textarea"></textarea></td>
+          </tr>
+          <tr>
+            <td bgcolor="#99FF00">Jenis Kelamin</td>
+            <td bgcolor="#99FF99">:</td>
+            <td bgcolor="#99FF99"><p>
+              <label>
+                <input type="radio" name="RadioGroup1" value="cwo" id="RadioGroup1_0">
+                Laki Laki</label>
+              <br>
+              <label>
+                <input type="radio" name="RadioGroup1" value="cwe" id="RadioGroup1_1">
+                Perempuan</label>
+              <br>
+            </p></td>
+          </tr>
+          <tr>
+            <td bgcolor="#99FF00">Agama</td>
+            <td bgcolor="#99FF99">:</td>
+            <td bgcolor="#99FF99"><label for="select">Select:</label>
+              <select name="select" id="select">
+                <option>Pilih</option>
+                <option>Islam</option>
+                <option>Kristen</option>
+                <option>Hindu</option>
+                <option>Budha</option>
+                <option>Konghucu</option>
+              </select></td>
+          </tr>
+          <tr>
+            <td bgcolor="#99FF00">&nbsp;</td>
+            <td bgcolor="#99FF99">&nbsp;</td>
+            <td bgcolor="#99FF99" align="right"> 
+              <input type="button" name="submit2" id="submit2" value="Submit" onclick="submitForm()">
+              <input type="button" name="Verifikasi" id="Verifikasi" value="Verifikasi" onclick="validateNPM()">
+              <input type="button" name="Help" id="Help" value="Help" onclick="showHelp()"></td>
+          </tr>
+        </tbody>
+      </table></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
